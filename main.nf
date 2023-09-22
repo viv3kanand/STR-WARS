@@ -39,13 +39,13 @@ process MERGE_FASTQ {
 
 workflow {
     // Collect the fastq files by barcode as tuple
-    def query_ch = Channel
-        .fromPath("$params.fastq/**/")
-        .flatMap { file ->
-            def barcode = file.getName().replaceAll(/.*barcode(\d+).*/, 'barcode$1')
-            def files = file.findAll {it.name.endsWith('.fastq.gz') }
-            files.collect {tuple(barcode, it.toAbsolutePath() )}
-        }.groupTuple()
+    Channel
+        .fromPath( "$params.fastq/**/" )
+        .map { file -> 
+        def barcode = file.getName().replaceAll(/.*barcode(\d+).*/, 'barcode$1')
+        tuple(barcode, file) }
+        .groupTuple()
+        .set { query_ch }
     // merge fastq files
     merge_fastq_ch = MERGE_FASTQ(query_ch)
     // index reference
