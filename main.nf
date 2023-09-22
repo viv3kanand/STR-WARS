@@ -18,3 +18,13 @@ log.info """\
     """
     .stripIndent(true)
 
+
+
+workflow {
+    // Collect the fastq files by barcode as tuple
+    // merge fastq files
+    // index reference
+    // align using minimap2
+    // fast5 index for STRique
+    // run STRique
+}
