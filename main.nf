@@ -1,7 +1,7 @@
 /*
  * pipeline input parameters
  */
-params.workdir   = "$baseDir"
+params.workdir   = "$PWD"
 params.fastq     = "$workdir/fastq"
 params.fast5     = "$workdir/fast5"
 params.reference = "$workdir/reference/ref.fa"
