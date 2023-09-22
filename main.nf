@@ -81,6 +81,32 @@ process INDEX_FAST5 {
     """
 }
 
+/*
+* Index fast5
+*/
+process STRIQUE {
+    cpus = 10
+    
+    tag "Repeat quantification for $barcode"
+    publishDir "$params.outdir/STRique/counts", mode:'copy'
+
+    container 'viv3kanand/strique_vbz'
+    
+    input:
+    path config
+    path index
+    tuple val(barcode), path(sam)
+
+    output:
+    path "${barcode}.strique.tsv"
+    path "${barcode}.log"
+
+    script:
+    """
+    cat $sam | python3 /app/scripts/STRique.py count --t ${task.cpus} $index /app/models/r9_4_450bps.model $config > ${barcode}.strique.tsv 2> ${barcode}.log
+    """
+}
+
 workflow {
     // Collect the fastq files by barcode as tuple
     Channel
@@ -97,4 +123,5 @@ workflow {
     // fast5 index for STRique
     fast5_index_ch = INDEX_FAST5(params.fast5)
     // run STRique
+    strique_ch = STRIQUE(params.config, fast5_index_ch, align_ch)
 }
