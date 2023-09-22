@@ -37,6 +37,26 @@ process MERGE_FASTQ {
     """
 }
 
+/*
+* Index reference
+*/
+process INDEX {
+    tag "Indexing $reference"
+    container 'quay.io/biocontainers/samtools:1.3.1--h0cf4675_11'
+
+    input:
+    path reference
+
+    output:
+    path "${reference}.fai"
+
+    script:
+    """
+    samtools faidx ${reference}
+    """
+}
+
+
 workflow {
     // Collect the fastq files by barcode as tuple
     Channel
@@ -49,6 +69,7 @@ workflow {
     // merge fastq files
     merge_fastq_ch = MERGE_FASTQ(query_ch)
     // index reference
+    INDEX(params.reference)
     // align using minimap2
     // fast5 index for STRique
     // run STRique
