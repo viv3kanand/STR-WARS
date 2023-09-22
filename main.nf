@@ -60,6 +60,27 @@ process ALIGN_MINIMAP {
     """
 }
 
+/*
+* Index fast5
+*/
+process INDEX_FAST5 {
+    tag "Indexing Fast5"
+    publishDir "$params.outdir/STRique/index", mode:'copy'
+
+    container 'viv3kanand/strique_vbz'
+
+    input:
+    path fast5
+
+    output:
+    path "reads.fofn"
+
+    script:
+    """
+    python3 /app/scripts/STRique.py index --recursive $fast5 > reads.fofn
+    """
+}
+
 workflow {
     // Collect the fastq files by barcode as tuple
     Channel
@@ -74,5 +95,6 @@ workflow {
     // align using minimap2
     align_ch = ALIGN_MINIMAP(params.reference, merge_fastq_ch)
     // fast5 index for STRique
+    fast5_index_ch = INDEX_FAST5(params.fast5)
     // run STRique
 }
