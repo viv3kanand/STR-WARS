@@ -22,6 +22,13 @@ log.info """\
 
 workflow {
     // Collect the fastq files by barcode as tuple
+    def barcode_fastq_ch = Channel
+        .fromPath("$params.fastq/**/")
+        .flatMap { file ->
+            def barcode = file.getName().replaceAll(/.*barcode(\d+).*/, 'barcode$1')
+            def files = file.findAll {it.name.endsWith('.fastq.gz') }
+            files.collect {tuple(barcode, it.toAbsolutePath() )}
+        }.groupTuple()
     // merge fastq files
     // index reference
     // align using minimap2
