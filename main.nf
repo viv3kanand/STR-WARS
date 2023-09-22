@@ -1,5 +1,8 @@
 def helpMessage() {
-  log.info """
+  log.info """\
+    F X N A N O - N F   P I P E L I N E
+    ===================================
+
         Usage:
         nextflow run viv3kanand/fxnano --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
 
@@ -15,6 +18,12 @@ def helpMessage() {
         --max_memory                   Maximum amount of memory that can be requested for any single job (default --max_memory '8.GB')
         --help                         Help message
         """
+}
+
+// Show help message
+if (params.help) {
+    helpMessage()
+    exit 0
 }
 
 /*
