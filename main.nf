@@ -18,11 +18,28 @@ log.info """\
     """
     .stripIndent(true)
 
+/*
+ * Merge fastq files by barcode
+ */
+process MERGE_FASTQ {
+    tag "Merging $barcode"
+    publishDir "$params.outdir/merged_fastq", mode:'copy'
 
+    input:
+    tuple val(barcode), path(reads)
+
+    output:
+    tuple val(barcode), path("${barcode}.fastq.gz")
+
+    script:
+    """
+    cat ${reads.join(' ')} > ${barcode}.fastq.gz
+    """
+}
 
 workflow {
     // Collect the fastq files by barcode as tuple
-    def barcode_fastq_ch = Channel
+    def query_ch = Channel
         .fromPath("$params.fastq/**/")
         .flatMap { file ->
             def barcode = file.getName().replaceAll(/.*barcode(\d+).*/, 'barcode$1')
@@ -30,6 +47,7 @@ workflow {
             files.collect {tuple(barcode, it.toAbsolutePath() )}
         }.groupTuple()
     // merge fastq files
+    merge_fastq_ch = MERGE_FASTQ(query_ch)
     // index reference
     // align using minimap2
     // fast5 index for STRique
