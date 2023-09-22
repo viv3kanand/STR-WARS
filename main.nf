@@ -37,25 +37,28 @@ process MERGE_FASTQ {
     """
 }
 
+
 /*
-* Index reference
+* Algin reads using Minimap2
 */
-process INDEX {
-    tag "Indexing $reference"
-    container 'quay.io/biocontainers/samtools:1.3.1--h0cf4675_11'
+process ALIGN_MINIMAP {
+    tag "Aligning for $barcode"
+    publishDir "$params.outdir/sam", mode:'copy'
+
+    container 'quay.io/biocontainers/mulled-v2-66534bcbb7031a148b13e2ad42583020b9cd25c4:7e6194c85b2f194e301c71cdda1c002a754e8cc1-0'
 
     input:
     path reference
+    tuple val(barcode), path(reads)
 
     output:
-    path "${reference}.fai"
+    tuple val(barcode), path("${barcode}.sam")
 
     script:
     """
-    samtools faidx ${reference}
+    minimap2 -a -x map-ont -t 40 $reference $reads | samtools view -Sh -F 3844 - | samtools sort -o ${barcode}.sam -
     """
 }
-
 
 workflow {
     // Collect the fastq files by barcode as tuple
@@ -68,9 +71,8 @@ workflow {
         .set { query_ch }
     // merge fastq files
     merge_fastq_ch = MERGE_FASTQ(query_ch)
-    // index reference
-    INDEX(params.reference)
     // align using minimap2
+    align_ch = ALIGN_MINIMAP(params.reference, merge_fastq_ch)
     // fast5 index for STRique
     // run STRique
 }
