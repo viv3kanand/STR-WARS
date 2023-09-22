@@ -1,11 +1,12 @@
 /*
  * pipeline input parameters
  */
-params.fastq = "$baseDir/fastq"
-params.fast5 = "$baseDir/fast5"
-params.reference = "$baseDir/reference/ref.fa"
-params.config = "$baseDir/reference/repeat_config.tsv"
-params.outdir = "$baseDir/results"
+params.workdir   = "$baseDir"
+params.fastq     = "$workdir/fastq"
+params.fast5     = "$workdir/fast5"
+params.reference = "$workdir/reference/ref.fa"
+params.config    = "$workdir/reference/repeat_config.tsv"
+params.outdir    = "$workdir/results"
 
 log.info """\
     F X N A N O - N F   P I P E L I N E
@@ -77,7 +78,7 @@ process INDEX_FAST5 {
 
     script:
     """
-    python3 /app/scripts/STRique.py index --out_prefix $baseDir/fast5 --recursive $fast5 > reads.fofn
+    python3 /app/scripts/STRique.py index --out_prefix $workdir/fast5 --recursive $fast5 > reads.fofn
     """
 }
 
