@@ -125,3 +125,7 @@ workflow {
     // run STRique
     strique_ch = STRIQUE(params.config, fast5_index_ch, align_ch)
 }
+
+workflow.onComplete {
+    log.info ( workflow.success ? "\nDone! The results can be found in the following directory --> $params.outdir\n" : "Oops .. something went wrong" )
+}
