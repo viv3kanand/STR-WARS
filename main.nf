@@ -1,3 +1,22 @@
+def helpMessage() {
+  log.info """
+        Usage:
+        nextflow run viv3kanand/fxnano --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
+
+        Mandatory arguments:
+         --fastq                        fastq directory
+         --fast5                        fast5 directory
+         --reference                    reference fasta
+         --config                       repeat config file
+
+       Optional arguments:
+        --outdir                       Output directory to place final BLAST output
+        --max_cpus                     Maximum number of CPUs that can be requested for any single job (default --max_cpus 10)
+        --max_memory                   Maximum amount of memory that can be requested for any single job (default --max_memory '8.GB')
+        --help                         Help message
+        """
+}
+
 /*
  * pipeline input parameters
  */
@@ -5,7 +24,7 @@ params.fastq     = "$projectDir/fastq"
 params.fast5     = "$projectDir/fast5"
 params.reference = "$projectDir/reference/ref.fa"
 params.config    = "$projectDir/reference/repeat_config.tsv"
-params.outdir    = "$projectDir/results"
+params.outdir    = "./results"
 
 log.info """\
     F X N A N O - N F   P I P E L I N E
@@ -37,10 +56,9 @@ process MERGE_FASTQ {
     """
 }
 
-
 /*
-* Algin reads using Minimap2
-*/
+ * Algin reads using Minimap2
+ */
 process ALIGN_MINIMAP {
     tag "Aligning for $barcode"
     publishDir "$params.outdir/sam", mode:'copy'
@@ -61,8 +79,8 @@ process ALIGN_MINIMAP {
 }
 
 /*
-* Index fast5
-*/
+ * Index fast5
+ */
 process INDEX_FAST5 {
     tag "Indexing Fast5"
     publishDir "$params.outdir/STRique/index", mode:'copy'
@@ -82,8 +100,8 @@ process INDEX_FAST5 {
 }
 
 /*
-* Index fast5
-*/
+ * run STRique
+ */
 process STRIQUE {
     cpus = 10
     
