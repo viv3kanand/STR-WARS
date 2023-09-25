@@ -105,7 +105,7 @@ process INDEX_FAST5 {
 
     script:
     """
-    python3 /app/scripts/STRique.py index --out_prefix $PWD/fast5 --recursive $fast5 > reads.fofn
+    python3 /app/scripts/STRique.py index --out_prefix $projectDir/fast5 --recursive $fast5 > reads.fofn
     """
 }
 
