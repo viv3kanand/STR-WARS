@@ -1,5 +1,7 @@
 def helpMessage() {
   log.info """\
+
+
     F X N A N O - N F   P I P E L I N E
     ===================================
 
@@ -105,7 +107,7 @@ process INDEX_FAST5 {
 
     script:
     """
-    python3 /app/scripts/STRique.py index --out_prefix $projectDir/fast5 --recursive $fast5 > reads.fofn
+    python3 /app/scripts/STRique.py index --out_prefix $PWD/fast5_pass --recursive $fast5 > reads.fofn
     """
 }
 
