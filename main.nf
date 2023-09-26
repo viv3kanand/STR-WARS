@@ -11,8 +11,8 @@ def helpMessage() {
         Mandatory arguments:
          --fastq                        fastq directory (default ./fastq_pass)
          --fast5                        fast5 directory (default ./fast5_pass)
-         --reference                    reference fasta (default ~/.nextflow/assets/viv3kanand/fxnano/reference/ref.fa)
-         --config                       repeat config file (default ~/.nextflow/assets/viv3kanand/fxnano/reference/repeat_config.tsv)
+         --reference                    reference fasta (default ./reference/ref.fa)
+         --config                       repeat config file (default ./reference/repeat_config.tsv)
 
        Optional arguments:
         --outdir                       Output directory (default ./results)
