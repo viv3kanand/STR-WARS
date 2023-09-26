@@ -2,15 +2,15 @@ def helpMessage() {
   log.info """\
 
 
-    F X N A N O - N F   P I P E L I N E
+    S T R - W A R S  P I P E L I N E
     ===================================
 
         Usage:
-        nextflow run viv3kanand/fxnano --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
+        nextflow run viv3kanand/STR-WARS --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
 
         Mandatory arguments:
-         --fastq                        fastq directory (default ./fastq)
-         --fast5                        fast5 directory (default ./fast5)
+         --fastq                        fastq directory (default ./fastq_pass)
+         --fast5                        fast5 directory (default ./fast5_pass)
          --reference                    reference fasta (default ~/.nextflow/assets/viv3kanand/fxnano/reference/ref.fa)
          --config                       repeat config file (default ~/.nextflow/assets/viv3kanand/fxnano/reference/repeat_config.tsv)
 
