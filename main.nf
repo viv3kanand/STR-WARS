@@ -15,7 +15,7 @@ def helpMessage() {
                   88  88  88     88 88    8888888
  
     S T R - W A R S (Short Tandem Repeat Workflow Automation Research Suite)
-    =======================================
+    ========================================================================
 
         Usage:
         nextflow run viv3kanand/STR-WARS --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
