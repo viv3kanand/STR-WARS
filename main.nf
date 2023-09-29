@@ -18,7 +18,10 @@ def helpMessage() {
     ========================================================================
 
         Usage:
-        nextflow run viv3kanand/STR-WARS --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
+        nextflow run viv3kanand/STR-WARS -r main --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
+
+        Testing pipeline:
+        nextflow run viv3kanand/STR-WARS -r main -profile test
 
         Mandatory arguments:
          --fastq                        fastq directory (default ./fastq_pass)
