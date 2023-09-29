@@ -41,15 +41,6 @@ if (params.help) {
     exit 0
 }
 
-/*
- * pipeline input parameters
- */
-// params.fastq     = "$projectDir/fastq"
-// params.fast5     = "$projectDir/fast5"
-// params.reference = "$projectDir/reference/ref.fa"
-// params.config    = "$projectDir/reference/repeat_config.tsv"
-// params.outdir    = "./results"
-
 log.info """\
     F X N A N O - N F   P I P E L I N E
     ===================================
