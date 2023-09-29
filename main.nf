@@ -1,9 +1,21 @@
 def helpMessage() {
   log.info """\
 
-
-    S T R - W A R S  P I P E L I N E
-    ===================================
+ 
+                    8888888888888888   88888
+                   88          88      88  88
+                    8888       88      88888
+                       88      88      88   88
+                88888888       88      88    888888
+ 
+                88  88  88   888    88888    888888
+                88  88  88  88 88   88  88  88
+                88 8888 88 88   88  88888    8888
+                 888  888 888888888 88   88     88
+                  88  88  88     88 88    8888888
+ 
+    S T R - W A R S (Short Tandem Repeat Workflow Automation Research Suite)
+    =======================================
 
         Usage:
         nextflow run viv3kanand/STR-WARS --fastq 'fastq_pass' --fast5 'fast5_pass' --reference 'reference/ref.fa' --config 'reference/repeat_config.tsv'
@@ -140,7 +152,7 @@ process STRIQUE {
 workflow {
     // Collect the fastq files by barcode as tuple
     Channel
-        .fromPath( "$params.fastq/**/" )
+        .fromPath("$params.fastq/**/", checkIfExists: true)
         .map { file -> 
         def barcode = file.getName().replaceAll(/.*barcode(\d+).*/, 'barcode$1')
         tuple(barcode, file) }
