@@ -45,7 +45,7 @@ if (params.help) {
 }
 
 log.info """\
-    F X N A N O - N F   P I P E L I N E
+    S T R - W A R S  P I P E L I N E
     ===================================
     reference    : ${params.reference}
     fastq        : ${params.fastq}
